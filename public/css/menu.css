@@ -6,7 +6,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url('imssR.jpg') no-repeat center center fixed; /
+    /* ANTES: background: url('imssR.jpg') ... */
+    /* DESPUÉS: */
+    background: url('../images/imssR.jpg') no-repeat center center fixed;
     background-size: cover; 
 }
 .navbar {

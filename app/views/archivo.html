@@ -83,11 +83,15 @@
 <body>
     <div class="upload-container">
         <h1>Archivos</h1>
-        <form action="archivopro.php" method="POST" enctype="multipart/form-data">
+        <!-- ANTES: <form action="archivopro.php" method="POST"> -->
+        <!-- DESPUÉS: -->
+        <form action="../controllers/ArchivoController.php" method="POST" enctype="multipart/form-data">
             <label for="archivo">Reportes de salida, resguardo y préstamo</label><br><br>
             <input type="file" name="archivo" id="archivo" required><br><br>
 
             <button type="submit">Subir archivo</button>
+            <!-- ANTES: onclick="window.location.href='menu.php'" -->
+            <!-- DESPUÉS: -->
             <button type="button" class="menu-button" onclick="window.location.href='menu.php'">Menú</button>
             <button type="button" id="removeButton" onclick="quitarArchivo()">Quitar archivo</button>
         </form>

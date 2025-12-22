@@ -1,13 +1,10 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "admin";
-$dbname = "reportes";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
+// Cargar configuración
+require_once __DIR__ . '/../config/database.php';
+
+// Usar función de conexión
+$conn = getMySQLiConnection();
 
 $suggestions = [];
 

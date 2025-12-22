@@ -34,7 +34,9 @@ form::before {
     background: #ffffff;
     border-radius: 50%;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    background-image: url('imagen/IMSS.png');
+    /* ANTES: background-image: url('imagen/IMSS.png'); */
+    /* DESPUÉS: */
+    background-image: url('../images/imss_2.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;

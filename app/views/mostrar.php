@@ -75,7 +75,9 @@
 <div class="container-fluid mt-4">
     <h2 class="mb-4">Reportes</h2>
     <div class="mb-3">
-    <button class="btn btn-primary" onclick="window.location.href='menu.php'">Volver al menú</button>
+        <!-- ANTES: onclick="window.location.href='menu.php'" -->
+        <!-- DESPUÉS: -->
+        <button class="btn btn-primary" onclick="window.location.href='menu.php'">Volver al menú</button>
         <button class="btn btn-success" id="searchButton">Buscar</button>
         <div id="searchField" style="display: none;">
             <input type="text" class="form-control" id="searchInput" placeholder="Ingrese el término de búsqueda...">
@@ -126,8 +128,10 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-    function loadTable(documentTypes = [], searchTerm = '') {
-        $.post('buscar.php', { document_types: documentTypes, search_term: searchTerm }, function(data) {
+function loadTable(documentTypes = [], searchTerm = '') {
+        // ANTES: $.post('buscar.php', ...)
+        // DESPUÉS:
+        $.post('../../api/buscar.php', { document_types: documentTypes, search_term: searchTerm }, function(data) {
             $('#tableBody').html(data);
         });
     }
@@ -167,7 +171,9 @@
     $(document).on('click', '.btn-delete', function() {
         var id = $(this).data('id');  
         if (confirm('¿Estás seguro de que deseas eliminar este registro?')) {
-            $.post('eliminar.php', { id: id }, function(data) {
+            // ANTES: $.post('eliminar.php', ...)
+            // DESPUÉS:
+            $.post('../../api/eliminar.php', { id: id }, function(data) {
                 alert(data);  
                 loadTable($('#documentTypeSelect').val(), $('#searchInput').val()); 
             });

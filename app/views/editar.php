@@ -1,15 +1,11 @@
 <?php
-$host = 'localhost';
-$dbname = 'reportes';
-$username = 'root';
-$password = 'admin';
+// Cargar configuración
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../config/paths.php';
 
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Error en la conexión: " . $e->getMessage());
-}
+// Usar función de conexión
+$pdo = getDBConnection();
+
 if (isset($_POST['id'])) {
     $id = $_POST['id'];
     $nombre_del_trabajador = $_POST['nombre_del_trabajador'];
@@ -101,6 +97,8 @@ if (isset($_POST['id'])) {
     $stmt->bindParam(':matricula_administrativo', $matricula_administrativo);
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     if ($stmt->execute()) {
+        // ANTES: header("Location: mostrar.php");
+        // DESPUÉS:
         header("Location: mostrar.php");
         exit();
     } else {

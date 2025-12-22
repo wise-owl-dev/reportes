@@ -1,17 +1,18 @@
 <?php
 ob_start();
+
+// Cargar autoloader de Composer
+require __DIR__ . '/../vendor/autoload.php';
+
+// Cargar configuración
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/paths.php';
+
 use setasign\Fpdi\Tcpdf\Fpdi;
-$servername = "localhost";
-$username = "root";
-$password = "admin";
-$dbname = "reportes";
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
-if (!$conn->set_charset("utf8")) {
-    die("Error cargando el conjunto de caracteres utf8: " . htmlspecialchars($conn->error));
-}
+
+// Usar función de conexión
+$conn = getMySQLiConnection();
+
 $data = [
     'nombre_del_trabajador' => isset($_POST['nombre_del_trabajador']) ? $_POST['nombre_del_trabajador'] : '',
     'institucion' => isset($_POST['institucion']) ? $_POST['institucion'] : '',
@@ -354,11 +355,15 @@ foreach ($descripciones as $i => $descripcion) {
     }
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  
     $documentos = [
-        1 => 'D:\\xampp\\htdocs\\Reportes\\salidaBiene.pdf',
-        2 => 'D:\\xampp\\htdocs\\Reportes\\resguardo1.pdf',
-        3 => 'D:\\xampp\\htdocs\\Reportes\\prestamo1.pdf'
+        // ANTES: 1 => 'D:\\xampp\\htdocs\\Reportes\\salidaBiene.pdf',
+        // DESPUÉS:
+        1 => TEMPLATES_PATH . '/salidaBiene.pdf',
+        2 => TEMPLATES_PATH . '/resguardo1.pdf',
+        3 => TEMPLATES_PATH . '/prestamo1.pdf'
     ];
+
     $errors = [];
     $pdfFiller = new PdfFiller();
     if (isset($_POST['tipo_documento'])) {

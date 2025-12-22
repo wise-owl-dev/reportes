@@ -1,21 +1,26 @@
 <?php
+
+// Cargar autoloader
+require __DIR__ . '/../../vendor/autoload.php';
+
+// Cargar configuración
+require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/../../config/paths.php';
+
 use PhpOffice\PhpSpreadsheet\IOFactory;
-require 'vendor/autoload.php'; 
+
 if (!class_exists('PhpOffice\PhpSpreadsheet\IOFactory')) {
     die('IOFactory no se pudo encontrar. Verifica la instalación de PhpSpreadsheet.');
 }
-$host = 'localhost';
-$dbname = 'reportes';
-$username = 'root';
-$password = 'admin';
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Error al conectar con la base de datos: " . $e->getMessage());
-}
+
+// Usar función de conexión
+$pdo = getDBConnection();
+
 if (isset($_FILES['archivo']) && $_FILES['archivo']['error'] === UPLOAD_ERR_OK) {
-    $carpetaDestino = 'uploads/';
+    // ANTES: $carpetaDestino = 'uploads/';
+    // DESPUÉS:
+    $carpetaDestino = UPLOADS_PATH . '/';
+
     if (!is_dir($carpetaDestino)) {
         mkdir($carpetaDestino, 0777, true);
     }

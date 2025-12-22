@@ -1,15 +1,10 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "admin";
-$dbname = "reportes";
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
-if (!$conn->set_charset("utf8")) {
-    die("Error cargando el conjunto de caracteres utf8: " . htmlspecialchars($conn->error));
-}
+// Cargar configuración
+require_once __DIR__ . '/../config/database.php';
+
+// Usar función de conexión
+$conn = getMySQLiConnection();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
     $id = intval($_POST['id']);
     $stmt = $conn->prepare("DELETE FROM documentos WHERE id = ?");

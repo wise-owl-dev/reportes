@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Formulario de bienes</title>
-    <link rel="stylesheet" href="estilo.css">
-    <style>
+    <!-- ANTES: <link rel="stylesheet" href="estilo.css"> -->
+    <!-- DESPUÉS: -->
+    <link rel="stylesheet" href="../../public/css/estilo.css">
+
+  <style>
         .suggestions-box {
     border: 1px solid #ccc;
     max-height: 150px;
@@ -54,7 +57,9 @@
     </style>
 </head>
 <body>
-    <form action="guardar.php" method="post" onsubmit="prepararEnvio()">
+    <!-- ANTES: <form action="guardar.php" method="post"> -->
+    <!-- DESPUÉS: -->
+    <form action="../../api/guardar.php" method="post" onsubmit="prepararEnvio()">
     
     <h2>Seleccione el tipo de documento</h2>
         <input type="checkbox" name="tipo_documento[]" value="1" onclick="mostrarOpcion(1); verificarCheckbox();">Constancia de salida.<br>
@@ -169,7 +174,10 @@
             Matrícula: <input type="text" name="matricula_administrativo"><br>
         </div>
         <div class="botones">
+        <!-- ANTES: <a href="menu.php" class="boton">Volver al menú</a> -->
+        <!-- DESPUÉS: -->
         <a href="menu.php" class="boton">Volver al menú</a>
+
         <button type="submit" class="boton">Generar PDF</button>
     </div>
     </form>
@@ -232,7 +240,9 @@ function fetchSuggestions(inputElement, field) {
     
     if (query.length > 2) { 
         $.ajax({
-            url: 'recomendacion.php',
+            // ANTES: url: 'recomendacion.php',
+            // DESPUÉS:
+            url: '../../api/recomendacion.php',
             method: 'GET',
             data: { field: field, query: query },
             dataType: 'json',

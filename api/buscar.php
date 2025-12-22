@@ -1,23 +1,17 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-$servername = "localhost";
-$username = "root";
-$password = "admin";
-$dbname = "reportes";
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    echo "<tr><td colspan='30'>Error en la conexión con la base de datos.</td></tr>";
-    exit();
-}
-if (!$conn->set_charset("utf8")) {
-    echo "<tr><td colspan='30'>Error cargando el conjunto de caracteres utf8: " . htmlspecialchars($conn->error) . "</td></tr>";
-    exit();
-}
-$searchTerm = '';
+
+// Cargar configuración
+require_once __DIR__ . '/../config/database.php';
+
+// Usar función de conexión
+$conn = getMySQLiConnection();
+
 if (isset($_POST['search_term'])) {
     $searchTerm = trim($_POST['search_term']);
 }
+
 $sql = "SELECT * FROM documentos";
 $params = [];
 $types = '';
@@ -42,8 +36,10 @@ $output = '';
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $output .= "<tr>";
+        // ANTES: href='editar.php?id=...
+        // DESPUÉS:
         $output .= "<td>
-            <a href='editar.php?id=" . htmlspecialchars($row['id']) . "' class='btn btn-info btn-action'>Editar</a>
+            <a href='../app/views/editar.php?id=" . htmlspecialchars($row['id']) . "' class='btn btn-info btn-action'>Editar</a>
             <button class='btn btn-danger btn-action btn-delete' data-id='" . htmlspecialchars($row['id']) . "'>Eliminar</button>
             <a href='reimprimir.php?id=" . htmlspecialchars($row['id']) . "' class='btn btn-info btn-action'>Imprimir</a>
         </td>";

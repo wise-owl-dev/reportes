@@ -1,7 +1,15 @@
 <?php
 ob_start();
+
+// Cargar autoloader
+require __DIR__ . '/../vendor/autoload.php';
+
+// Cargar configuración
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/paths.php';
+
 use setasign\Fpdi\Tcpdf\Fpdi;
-require __DIR__ . '/vendor/autoload.php';
+
 class PdfFiller {
     private $pdf;
     public function __construct() {
@@ -340,12 +348,17 @@ try {
         $stmt->execute();
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($data) {
+          
             $data['descripciones'] = json_decode($data['descripciones_json'], true);
+        
+            // ANTES: $files = ['D:\\xampp\\htdocs\\Reportes\\salidaBiene.pdf', ...];
+           // DESPUÉS:
             $files = [
-                'D:\\xampp\\htdocs\\Reportes\\salidaBiene.pdf',
-                'D:\\xampp\\htdocs\\Reportes\\resguardo1.pdf',
-                'D:\\xampp\\htdocs\\Reportes\\prestamo1.pdf'
+              TEMPLATES_PATH . '/salidaBiene.pdf',
+              TEMPLATES_PATH . '/resguardo1.pdf',
+              TEMPLATES_PATH . '/prestamo1.pdf'
             ];
+
             $pdfFiller = new PdfFiller();
             $pdfFiller->generateFromTemplate($files[0]);
             $pdfFiller->fillForm1($files[0], $data); 

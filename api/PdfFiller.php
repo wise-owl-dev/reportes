@@ -165,22 +165,32 @@ class PdfFiller {
     
     private function handleDescriptions($descripciones) {
     $this->pdf->SetFont('helvetica', '', 8);
-    $this->pdf->SetTextColor(0, 0, 0);
 
-    $x = 98;          // columna descripción
-    $y = 98;          // inicio vertical
-    $width = 100;      // ancho REAL del recuadro
+    $x = 98;
+    $y = 96;
+    $width = 100;
     $lineHeight = 5;
 
+   // 👉 Si hay más de 5, mostrar mensaje
+    if (count($descripciones) > 5) {
+        $this->pdf->SetXY($x, $y + 2);
+        $this->pdf->SetFont('helvetica', 8);
+        $this->pdf->MultiCell(
+            $width,
+            $lineHeight,
+            'Información adicional en el anexo.',
+            0,
+            'L'
+        );
+    }
 
-    // 🔹 Limitar a máximo 5 descripciones
-    $descripciones = array_slice($descripciones, 0, 6);
-
-    foreach ($descripciones as $descripcion) {
+    foreach ($primeras as $descripcion) {
         $this->pdf->SetXY($x, $y);
         $this->pdf->MultiCell($width, $lineHeight, $descripcion, 0, 'L');
-        $y = $this->pdf->GetY(); // ← posición real después del texto
+        $y = $this->pdf->GetY();
     }
+
+    
 }
 
     
